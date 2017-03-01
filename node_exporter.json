@@ -1,0 +1,12 @@
+[
+    {
+	"labels": {
+	    "job": "node"
+	}, 
+	"targets": [
+	    "snort0:9100",
+	    "snort1:9100"
+	]
+    }
+]
+

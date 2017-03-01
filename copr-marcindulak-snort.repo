@@ -1,0 +1,6 @@
+[copr-marcindulak-snort]
+name=copr-marcindulak-snort
+baseurl=https://copr-be.cloud.fedoraproject.org/results/marcindulak/snort/epel-$releasever-$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/marcindulak/snort/pubkey.gpg

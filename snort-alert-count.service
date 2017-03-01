@@ -1,0 +1,19 @@
+[Unit]
+Description=snort-alert-count
+After=syslog.target network.target snort@enp0s8
+Requires=snort@enp0s8
+PartOf=snort@enp0s8
+
+[Service]
+Restart=on-failure
+User=root
+Group=root
+ExecStartPre=/usr/bin/sleep 5
+ExecStart=/bin/sh -c '/usr/bin/python /usr/local/bin/snort-alert-count.py \
+                      --directory /var/log/snort \
+                      --prefix unified2.log \
+		      --output /var/lib/prometheus/snort.prom \
+                      --threshold_seconds=20 2>&1'
+
+[Install]
+WantedBy=multi-user.target
