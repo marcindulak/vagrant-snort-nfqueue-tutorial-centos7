@@ -71,7 +71,7 @@ END
 SCRIPT
   # https://github.com/lest/prometheus-rpm
   $prometheus_el = <<SCRIPT
-curl -s https://packagecloud.io/install/repositories/prometheus-rpm/release/script.rpm.sh | bash
+curl -s https://packagecloud.io/install/repositories/prometheus-rpm/release/script.rpm.sh | sed 's/yum install -y/yum install -d0 -e0 -y/' | bash
 SCRIPT
   hosts.keys.sort.each do |host|
     config.vm.define hosts[host]['hostname'] do |machine|
