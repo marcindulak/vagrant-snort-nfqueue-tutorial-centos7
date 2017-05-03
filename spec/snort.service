@@ -1,0 +1,21 @@
+[Unit]
+Description=Snort on '%I'
+After=syslog.target network.target
+
+[Service]
+Restart=on-failure
+# root needed for nfq inline
+User=root
+Group=snort
+#We probably want to disable gro etc.
+#ExecStartPre=/sbin/ethtool -K %I tx off rx off tso off gso off gro off
+Environment=LUA_PATH=/usr/include/snort/lua/?.lua
+Environment=SNORT_LUA_PATH=/etc/snort
+ExecStart=/usr/sbin/snort -d -Q --daq-dir /usr/lib64/daq --daq nfq -l /var/log/snort -c /etc/snort/snort.lua -A unified2 -v --plugin-path LIBDIR/snort_extra
+ExecStartPre=/bin/sh -c '/usr/sbin/iptables -t filter -C INPUT -i %I -j NFQUEUE --queue-num 0 --queue-bypass || /usr/sbin/iptables -t filter -I INPUT -i %I -j NFQUEUE --queue-num 0 --queue-bypass'
+ExecStartPre=/bin/sh -c '/usr/sbin/iptables -t filter -C OUTPUT -o %I -j NFQUEUE --queue-num 0 --queue-bypass || /usr/sbin/iptables -t filter -I OUTPUT -o %I -j NFQUEUE --queue-num 0 --queue-bypass'
+ExecStopPost=/bin/sh -c '/usr/sbin/iptables -t filter -C INPUT -i %I -j NFQUEUE --queue-num 0 --queue-bypass && /usr/sbin/iptables -t filter -D INPUT -i %I -j NFQUEUE --queue-num 0 --queue-bypass'
+ExecStopPost=/bin/sh -c '/usr/sbin/iptables -t filter -C OUTPUT -o %I -j NFQUEUE --queue-num 0 --queue-bypass && /usr/sbin/iptables -t filter -D OUTPUT -o %I -j NFQUEUE --queue-num 0 --queue-bypass'
+
+[Install]
+Alias=multi-user.target.wants/snort@%i.service
