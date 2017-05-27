@@ -24,7 +24,7 @@ Release:	0.%{release_build}.%{release_phase}%{?dist}
 License:	GPLv2 and BSD
 Url:		http://www.snort.org/
 %if 0%{?github}
-Source0:	https://github.com/snortadmin/%{real_name}/archive/%{commit0}.tar.gz#/%{github_name}-%{release_commit}.tar.gz
+Source0:	https://github.com/snortadmin/%{github_name}/archive/%{release_commit}.tar.gz#/%{github_name}-%{release_commit}.tar.gz
 %else
 Source0:	https://www.snort.org/downloads/snortplus/%{real_name}-%{version}-%{release_phase}-%{release_build}-auto.tar.gz
 %endif
