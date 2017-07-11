@@ -57,7 +57,7 @@ SCRIPT
 echo "$*" >> /etc/hosts
 SCRIPT
   $epel7 = <<SCRIPT
-yum -d 1 -e 0 -y install https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
+yum -d 1 -e 0 -y install https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
 SCRIPT
   $snort_el = <<SCRIPT
 cat <<'END' > /etc/yum.repos.d/copr-marcindulak-snort.repo
